@@ -1,0 +1,24 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="app.Windows.UserWindow"
+        Title="Окно пользователя"
+        ContentTemplate="{StaticResource CustomerTemplate}">
+    
+    <Window.Resources>
+        <DataTemplate x:Key="CustomerTemplate">
+            <StackPanel Spacing="10" Margin="10">
+                <Label Content="Войти"></Label>
+                <Button Content="Сменить пароль" Click="Button_OnClick"></Button>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="AdministratorTemplate">
+            
+        </DataTemplate>
+    </Window.Resources>
+    
+    
+    
+</Window>

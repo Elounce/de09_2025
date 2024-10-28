@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="clr-namespace:app.Model"
+        xmlns:local="clr-namespace:app"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="app.Windows.AuthorizationWindow"
+        Title="Авторизация"
+        SizeToContent="WidthAndHeight"
+        x:Name="root"
+        x:DataType="local:UserAuth">
+ 
+    <StackPanel Width="350" 
+                Orientation="Vertical" 
+                Spacing="10" 
+                Margin="5">
+        <TextBox Name="TBLogin" Text="TestUser" Watermark="Login"></TextBox>
+        <TextBox PasswordChar="*" Name="TBPassword" Text="PasswordTest" Watermark="Password"></TextBox>
+        <Button Click="AuthButtonOnClick">Войти</Button>
+    </StackPanel>
+</Window>
