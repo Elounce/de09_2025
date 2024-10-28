@@ -47,6 +47,13 @@ public partial class AuthorizationWindow : Window
             return;
         }
 
+        if (user.Password == pass && user.Login == log)
+        {
+            messageWindow.Message.Text = 
+                "Вы ввели неверный логин или пароль. Пожалуйста проверьте ещё раз введенные данные";
+            await messageWindow.ShowDialog<bool>(this);
+            return;
+        }
         
         if (user.LoginAttempts == attempts)
         {
