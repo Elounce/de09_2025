@@ -23,17 +23,11 @@ public partial class MkarpovDe092025Context : DbContext
 
     public virtual DbSet<Guest> Guests { get; set; }
 
-    public virtual DbSet<NomerFond> NomerFonds { get; set; }
-
-    public virtual DbSet<Otchet> Otchets { get; set; }
-
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Room> Rooms { get; set; }
 
     public virtual DbSet<Status> Statuses { get; set; }
-
-    public virtual DbSet<TwoTablesImport> TwoTablesImports { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -122,36 +116,6 @@ public partial class MkarpovDe092025Context : DbContext
                 .HasConstraintName("guest_ibfk_1");
         });
 
-        modelBuilder.Entity<NomerFond>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("nomer_fond");
-
-            entity.Property(e => e.Category)
-                .HasMaxLength(64)
-                .HasColumnName("category");
-            entity.Property(e => e.Floor)
-                .HasMaxLength(50)
-                .HasColumnName("floor");
-            entity.Property(e => e.Number).HasColumnName("number");
-        });
-
-        modelBuilder.Entity<Otchet>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("otchet");
-
-            entity.Property(e => e.Category)
-                .HasMaxLength(64)
-                .HasColumnName("category");
-            entity.Property(e => e.Number).HasColumnName("number");
-            entity.Property(e => e.Status)
-                .HasMaxLength(50)
-                .HasColumnName("status");
-        });
-
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("PRIMARY");
@@ -207,24 +171,6 @@ public partial class MkarpovDe092025Context : DbContext
                 .HasColumnName("name");
         });
 
-        modelBuilder.Entity<TwoTablesImport>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("two_tables_import");
-
-            entity.Property(e => e.Category)
-                .HasMaxLength(100)
-                .HasColumnName("category");
-            entity.Property(e => e.Floor)
-                .HasMaxLength(100)
-                .HasColumnName("floor");
-            entity.Property(e => e.Number).HasColumnName("number");
-            entity.Property(e => e.Status)
-                .HasMaxLength(100)
-                .HasColumnName("status");
-        });
-
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PRIMARY");
@@ -237,12 +183,17 @@ public partial class MkarpovDe092025Context : DbContext
             entity.Property(e => e.FirstName)
                 .HasMaxLength(50)
                 .HasColumnName("firstName");
+            entity.Property(e => e.IsBlocked).HasColumnName("isBlocked");
+            entity.Property(e => e.LastLoginDate)
+                .HasColumnType("datetime")
+                .HasColumnName("lastLoginDate");
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .HasColumnName("lastName");
             entity.Property(e => e.Login)
                 .HasMaxLength(50)
                 .HasColumnName("login");
+            entity.Property(e => e.LoginAttempts).HasColumnName("loginAttempts");
             entity.Property(e => e.Password)
                 .HasMaxLength(50)
                 .HasColumnName("password");

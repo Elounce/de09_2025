@@ -6,6 +6,11 @@
         x:Class="app.Windows.MessageWindow"
         Title="Сообщение"
         Width="500"
-        SizeToContent="Height">
-  <TextBlock Name="Message"></TextBlock>
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen">
+  <TextBlock MaxWidth="400" 
+             VerticalAlignment="Center" 
+             TextWrapping="Wrap" 
+             Name="Message" 
+             Margin="10"></TextBlock>
 </Window>

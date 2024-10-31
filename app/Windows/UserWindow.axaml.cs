@@ -1,3 +1,4 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.Templates;
@@ -12,8 +13,14 @@ public partial class UserWindow : Window
         ContentTemplate = (DataTemplate)Resources["CustomerTemplate"]!;
     }
 
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
+    private void ChangePassword_OnClick(object? sender, RoutedEventArgs e)
     {
-        throw new System.NotImplementedException();
+        /*var curPass = Current
+        
+        if ()
+        {
+            
+        }*/
+        ContentTemplate = (DataTemplate)Resources["AdministratorTemplate"]!;
     }
 }

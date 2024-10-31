@@ -17,5 +17,11 @@ public partial class User
 
     public string Login { get; set; } = null!;
 
+    public DateTime? LastLoginDate { get; set; }
+
+    public int? LoginAttempts { get; set; }
+
+    public bool IsBlocked { get; set; }
+
     public virtual Role Role { get; set; } = null!;
 }
