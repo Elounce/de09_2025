@@ -149,7 +149,7 @@ public partial class AuthorizationWindow : Window
         };
                     
         await UpdateUser(upUser);
-        
+
         await userWindow.ShowDialog<bool>(this);
     }
 
