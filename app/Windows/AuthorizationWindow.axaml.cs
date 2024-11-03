@@ -62,7 +62,7 @@ public partial class AuthorizationWindow : Window
         User upUser;
         var log = TBLogin.Text;
         var pass = TBPassword.Text;
-        var userWindow = new UserWindow();
+        
 
         if (string.IsNullOrWhiteSpace(log) || string.IsNullOrWhiteSpace(pass))
         {
@@ -149,7 +149,8 @@ public partial class AuthorizationWindow : Window
         };
                     
         await UpdateUser(upUser);
-
+        
+        var userWindow = new UserWindow(user);
         await userWindow.ShowDialog<bool>(this);
     }
 
