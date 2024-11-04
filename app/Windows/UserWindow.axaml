@@ -4,26 +4,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="app.Windows.UserWindow"
+        xmlns:model="clr-namespace:app.Model"
+        xmlns:windows="clr-namespace:app.Windows"
         Title="Профиль"
         Width="600"
         SizeToContent="Height"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        x:Name="Root"
+        x:DataType="windows:UserWindow">
     
     <Window.Resources>
         <DataTemplate x:Key="CustomerTemplate">
             
         </DataTemplate>
-        <DataTemplate x:Key="AdministratorTemplate">
-            
+        <DataTemplate x:Key="AdministratorTemplate" x:DataType="{x:Type model:User}">
+            <Border>
+                <StackPanel Spacing="10">
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBox Margin="5" Watermark="login" Text="{Binding Login}"/>
+                        <TextBox Margin="5" Watermark="password" Text="{Binding Password}"/>
+                        <TextBox Margin="5" Watermark="first name" Text="{Binding FirstName}"/>
+                        <TextBox Margin="5" Watermark="last name" Text="{Binding LastName}"/>
+                        <ComboBox Margin="5" ItemsSource="{Binding #Root.RolesList}" SelectedItem="{Binding Role.Name}"/>
+                        <CalendarDatePicker Margin="5" SelectedDate="{Binding LastLoginDate}"/>
+                        <TextBox Margin="5" Watermark="login attempts" Text="{Binding LoginAttempts}"/>
+                        <CheckBox Margin="5" IsPressed="{Binding IsBlocked}"></CheckBox>
+                    </WrapPanel>
+                    <Button Content="Изменить" Click="ChangeUser_OnClick"/>
+                </StackPanel>
+            </Border>
         </DataTemplate>
     </Window.Resources>
     
-    <StackPanel Spacing="10" Margin="10" >
-        <Label Content="Смена пароля"></Label>
-        <TextBox x:Name="CurrentPassword" Watermark="текущий пароль"></TextBox>
-        <TextBox x:Name="NewPassword" Watermark="новый пароль"></TextBox>
-        <TextBox x:Name="NewPasswordConfirm" Watermark="подтверждение нового пароля"></TextBox>
-        <Button Content="Изменить пароль" Click="ChangePassword_OnClick"></Button>
-    </StackPanel>
+    <Grid>
+        <StackPanel Name="UserView" Spacing="10" Margin="10" IsEnabled="False" IsVisible="False">
+            <Label Content="Смена пароля"></Label>
+            <TextBox x:Name="CurrentPassword" Watermark="текущий пароль"></TextBox>
+            <TextBox x:Name="NewPassword" Watermark="новый пароль"></TextBox>
+            <TextBox x:Name="NewPasswordConfirm" Watermark="подтверждение нового пароля"></TextBox>
+            <Button Content="Изменить пароль" Click="ChangePassword_OnClick"></Button>
+        </StackPanel>
     
+        <StackPanel Name="AdminView" Orientation="Vertical" IsEnabled="False" IsVisible="False">
+            <Border BorderThickness="1" BorderBrush="Orange">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Добавить пользователя" Click="NewUser_OnClick"/>
+                </StackPanel>
+            </Border>
+            
+            <ListBox 
+                Name="AdminListBox"
+                ItemTemplate="{StaticResource AdministratorTemplate}" 
+                ItemsSource="{Binding UsersList}"
+                SelectionMode="Single">
+                
+            </ListBox> 
+        </StackPanel>
+    </Grid>
 </Window>

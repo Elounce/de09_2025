@@ -1,23 +1,49 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using app.Model;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.Templates;
+using Microsoft.EntityFrameworkCore;
 using Mysqlx.Cursor;
 
 namespace app.Windows;
 
-public partial class UserWindow : Window
+public partial class UserWindow : Window, INotifyPropertyChanged
 {
     private readonly User _user;
+    public List<User>? UsersList {get; private set; }
+    public List<String> RolesList { get; private set; }
+    
+    public new event PropertyChangedEventHandler? PropertyChanged;
+
     public UserWindow(User user)
     {
         _user = user;
         InitializeComponent();
-        /*ContentTemplate = (DataTemplate)Resources["CustomerTemplate"]!;*/
+        DataContext = this;
         
-        /*ContentTemplate = (DataTemplate)Resources["AdministratorTemplate"]!;*/
+        if (_user.RoleId.Equals(2))
+        {
+            UserView.IsEnabled = true;
+            UserView.IsVisible = true;
+        }
+        else
+        {
+            AdminView.IsEnabled = true;
+            AdminView.IsVisible = true;
+            _ = GetUsers();
+            _ = GetRoles();
+        }
+    }
+
+    private void NotifyPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     private async Task UpdateUser(User user)
@@ -35,6 +61,29 @@ public partial class UserWindow : Window
             await OpenMessageWindow($"{e.Message}");
         }
         
+    }
+
+    private async Task GetRoles()
+    {
+        await using (var context = new MkarpovDe092025Context())
+        {
+            RolesList = context.Roles
+                .Select(r => r.Name)
+                .ToList();
+        }
+        NotifyPropertyChanged(nameof(RolesList));
+    }
+
+    private async Task GetUsers()
+    {
+        await using (var context = new MkarpovDe092025Context())
+        {
+            UsersList = context.Users
+                .Where(u => u.RoleId.Equals(2))
+                .Include(u => u.Role)
+                .ToList();
+        }
+        NotifyPropertyChanged(nameof(UsersList));
     }
 
     private async Task OpenMessageWindow(string message)
@@ -86,5 +135,24 @@ public partial class UserWindow : Window
         await OpenMessageWindow("Пароль успешно изменён.");
         Close(true);
 
+    }
+
+    private void NewUser_OnClick(object? sender, RoutedEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private async void ChangeUser_OnClick(object? sender, RoutedEventArgs e)
+    {
+        var user = AdminListBox.SelectedItem as User;
+        
+        if (user == null)
+            return;
+        
+        if (user.Login == null && user.Password == null && user.RoleId == null)
+            return;
+        
+        await UpdateUser(user);
+        await OpenMessageWindow("Данные пользователя изменены");
     }
 }

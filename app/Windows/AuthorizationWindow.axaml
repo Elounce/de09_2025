@@ -15,8 +15,8 @@
                 Orientation="Vertical" 
                 Spacing="10" 
                 Margin="5">
-        <TextBox Name="TBLogin" Text="TestUser" Watermark="Login"></TextBox>
-        <TextBox PasswordChar="*" Name="TBPassword" Text="PasswordTest" Watermark="Password"></TextBox>
+        <TextBox Name="TBLogin" Text="admin" Watermark="Login"></TextBox>
+        <TextBox PasswordChar="*" Name="TBPassword" Text="password" Watermark="Password"></TextBox>
         <Button Click="AuthButtonOnClick">Войти</Button>
     </StackPanel>
 </Window>
