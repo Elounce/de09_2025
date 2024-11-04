@@ -17,7 +17,7 @@ public partial class UserWindow : Window, INotifyPropertyChanged
 {
     private readonly User _user;
     public List<User>? UsersList {get; private set; }
-    public List<String> RolesList { get; private set; }
+    public IEnumerable<String> RolesList { get; private set; }
     
     public new event PropertyChangedEventHandler? PropertyChanged;
 
@@ -67,10 +67,12 @@ public partial class UserWindow : Window, INotifyPropertyChanged
     {
         await using (var context = new MkarpovDe092025Context())
         {
-            RolesList = context.Roles
+            var roles = context.Roles
                 .Select(r => r.Name)
                 .ToList();
+            RolesList = roles.Prepend("");
         }
+        
         NotifyPropertyChanged(nameof(RolesList));
     }
 
@@ -137,11 +139,13 @@ public partial class UserWindow : Window, INotifyPropertyChanged
 
     }
 
-    private void NewUser_OnClick(object? sender, RoutedEventArgs e)
+    private async void NewUser_OnClick(object? sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        var newUserWindow = new NewUserWindow(RolesList);
+        await newUserWindow.ShowDialog(this);
     }
 
+    // Изменение данных юзеров работает некорректно
     private async void ChangeUser_OnClick(object? sender, RoutedEventArgs e)
     {
         var user = AdminListBox.SelectedItem as User;
@@ -149,10 +153,13 @@ public partial class UserWindow : Window, INotifyPropertyChanged
         if (user == null)
             return;
         
-        if (user.Login == null && user.Password == null && user.RoleId == null)
+        if (string.IsNullOrWhiteSpace(user.Login) 
+            || string.IsNullOrWhiteSpace(user.Password)
+            || user.RoleId == 0)
             return;
         
         await UpdateUser(user);
         await OpenMessageWindow("Данные пользователя изменены");
+        await GetUsers();
     }
 }

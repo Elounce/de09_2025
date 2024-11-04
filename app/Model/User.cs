@@ -15,7 +15,7 @@ public partial class User
 
     public string? LastName { get; set; }
 
-    public string Login { get; set; } = null!;
+    public string? Login { get; set; } = null!;
 
     public DateTime? LastLoginDate { get; set; }
 
