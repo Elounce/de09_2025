@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="api_test.MainWindow"
+        Title="Валидация данных"
+        SizeToContent="WidthAndHeight">
+    
+    <StackPanel Margin="50" Orientation="Vertical" Spacing="20">
+        <StackPanel Width="600" Orientation="Horizontal" Spacing="20">
+            <Button Content="Получить данные" Click="GetName_OnClick" VerticalAlignment="Center"/>
+            <TextBlock Name="NameTextBlock" VerticalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Width="600" Orientation="Horizontal" Spacing="20">
+            <Button Content="Отправить результаты" Click="CheckName_OnClick" VerticalAlignment="Center"/>
+            <TextBlock Name="CheckResult" VerticalAlignment="Center"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
